@@ -16,16 +16,39 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.getRandomTheme', () => {
 		// The code you place here will be executed every time your command is executed
-		let config = vscode.workspace.getConfiguration('editor', null).update('fontFamily', 'Times New Roman', true);
-		
-		
-		//.update('editor.background', '#ABCABC', vscode.ConfigurationTarget.Workspace);//.update('tree.indent', 9, vscode.ConfigurationTarget.Workspace);
+
+		let activeTextEditor = vscode.window.activeTextEditor;
+
+		if (activeTextEditor === undefined) {
+			vscode.window.showErrorMessage('Open a file first.');
+		} else {
+			let editorConfig = vscode.workspace.getConfiguration('editor', activeTextEditor.document.uri);
+			console.log(editorConfig);
+
+			editorConfig.update('fontFamily', 'Times New Roman', vscode.ConfigurationTarget.Workspace);
+
+			vscode.window.showInformationMessage('Here\'s your random theme');
+		}
 
 
-		console.log(config);
+
+
+		let c = new vscode.Color(0.2, 0.4, 0.6, 1);
+
+
+
+
+		// // vscode.workspace.getConfiguration('editor').update('background', c, vscode.ConfigurationTarget.Workspace);
+		// // let config = vscode.workspace.getConfiguration('editor').get('background');
+			
+		
+		
+		// //.update('editor.background', '#ABCABC', vscode.ConfigurationTarget.Workspace);//.update('tree.indent', 9, vscode.ConfigurationTarget.Workspace);
+
+
+		// console.log(config);
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Here\'s your random theme');
 	});
 
 	context.subscriptions.push(disposable);
