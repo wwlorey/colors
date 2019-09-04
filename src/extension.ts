@@ -1,11 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-import { getVSCodeDownloadUrl } from 'vscode-test/out/util';
+import { ExtensionContext, commands, window, workspace, ConfigurationTarget, Color } from 'vscode';
+// import { getVSCodeDownloadUrl } from 'vscode-test/out/util';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
@@ -14,41 +14,34 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.getRandomTheme', () => {
+	let disposable = commands.registerCommand('extension.getRandomTheme', () => {
 		// The code you place here will be executed every time your command is executed
 
-		let activeTextEditor = vscode.window.activeTextEditor;
+		let activeTextEditor = window.activeTextEditor;
 
 		if (activeTextEditor === undefined) {
-			vscode.window.showErrorMessage('Open a file first.');
+			window.showErrorMessage('Open a file first.');
 		} else {
-			let editorConfig = vscode.workspace.getConfiguration('editor', activeTextEditor.document.uri);
-			console.log(editorConfig);
+			let workbenchConfig = workspace.getConfiguration('workbench', activeTextEditor.document.uri);
+			console.log(workbenchConfig);
 
-			editorConfig.update('fontFamily', 'Times New Roman', vscode.ConfigurationTarget.Workspace);
+			// Attempt to update individual colors...
+			// workbenchConfig.update('colorCustomizations.colors.editor.background', '#aaaaaa', ConfigurationTarget.Workspace);
 
-			vscode.window.showInformationMessage('Here\'s your random theme');
+			// Update theme instead
+			workbenchConfig.update('colorTheme', 'Solarized Light', ConfigurationTarget.Workspace);
+
+			window.showInformationMessage('Here\'s your random theme');
 		}
 
-
-
-
-		let c = new vscode.Color(0.2, 0.4, 0.6, 1);
-
-
-
+		// let c = new Color(0.2, 0.4, 0.6, 1);
 
 		// // vscode.workspace.getConfiguration('editor').update('background', c, vscode.ConfigurationTarget.Workspace);
 		// // let config = vscode.workspace.getConfiguration('editor').get('background');
-			
-		
 		
 		// //.update('editor.background', '#ABCABC', vscode.ConfigurationTarget.Workspace);//.update('tree.indent', 9, vscode.ConfigurationTarget.Workspace);
 
-
 		// console.log(config);
-
-		// Display a message box to the user
 	});
 
 	context.subscriptions.push(disposable);
