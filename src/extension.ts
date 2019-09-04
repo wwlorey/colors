@@ -1,48 +1,144 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import { ExtensionContext, commands, window, workspace, ConfigurationTarget, Color } from 'vscode';
-// import { getVSCodeDownloadUrl } from 'vscode-test/out/util';
+import {
+    ExtensionContext,
+    commands,
+    window,
+    workspace,
+    ConfigurationTarget
+} from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: ExtensionContext) {
+// Configuration options that will be updated with random colors
+const configOptions: string[] = [
+    'activityBar.background',
+    'activityBar.foreground',
+    'button.background',
+    'button.foreground',
+    'editor.background',
+    'editor.findMatchBackground',
+    'editor.findMatchBorder',
+    'editor.findMatchHighlightBackground',
+    'editor.findMatchHighlightBorder',
+    'editor.findRangeHighlightBackground',
+    'editor.findRangeHighlightBorder',
+    'editor.foreground',
+    'editor.hoverHighlightBackground',
+    'editor.inactiveSelectionBackground',
+    'editor.lineHighlightBackground',
+    'editor.lineHighlightBorder',
+    'editor.rangeHighlightBackground',
+    'editor.rangeHighlightBorder',
+    'editor.selectionBackground',
+    'editor.selectionForeground',
+    'editor.selectionHighlightBackground',
+    'editor.selectionHighlightBorder',
+    'editor.wordHighlightBackground',
+    'editor.wordHighlightBorder',
+    'editor.wordHighlightStrongBackground',
+    'editor.wordHighlightStrongBorder',
+    'editorCursor.background',
+    'editorCursor.foreground',
+    'editorGroupHeader.tabsBackground',
+    'editorLineNumber.activeForeground',
+    'editorLineNumber.foreground',
+    'editorPane.background',
+    'list.activeSelectionBackground',
+    'list.activeSelectionForeground',
+    'list.dropBackground',
+    'list.focusBackground',
+    'list.focusForeground',
+    'list.highlightForeground',
+    'list.hoverBackground',
+    'list.hoverForeground',
+    'list.inactiveSelectionBackground',
+    'list.inactiveSelectionForeground',
+    'menu.background',
+    'menu.foreground',
+    'menubar.selectionBackground',
+    'menubar.selectionBorder',
+    'menubar.selectionForeground',
+    'notificationCenter.border',
+    'notificationCenterHeader.background',
+    'notificationCenterHeader.foreground',
+    'notifications.background',
+    'notifications.border',
+    'notifications.foreground',
+    'panel.background',
+    'panel.border',
+    'sideBar.background',
+    'sideBar.border',
+    'sideBar.foreground',
+    'sideBarSectionHeader.background',
+    'sideBarTitle.foreground',
+    'statusBar.background',
+    'statusBar.border',
+    'statusBar.foreground',
+    'tab.activeBackground',
+    'tab.activeForeground',
+    'tab.hoverBackground',
+    'tab.inactiveBackground',
+    'tab.unfocusedActiveBackground',
+    'terminal.background',
+    'terminal.foreground',
+    'textBlockQuote.background',
+    'textBlockQuote.border',
+    'textCodeBlock.background',
+    'textLink.activeForeground',
+    'textLink.foreground',
+    'textPreformat.foreground',
+    'textSeparator.foreground',
+    'titleBar.activeBackground',
+    'titleBar.activeForeground',
+    'titleBar.border'
+];
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "colors" is now active!');
+const hexDigits = '0123456789ABCDEF';
+const colorLength = 6;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = commands.registerCommand('extension.getRandomTheme', () => {
-		// The code you place here will be executed every time your command is executed
-
-		let activeTextEditor = window.activeTextEditor;
-
-		if (activeTextEditor === undefined) {
-			window.showErrorMessage('Open a file first.');
-		} else {
-			let colorConfig = workspace.getConfiguration('workbench', activeTextEditor.document.uri);
-
-			colorConfig.update('colorCustomizations', {"editor.background": "#123"}, ConfigurationTarget.Workspace);
-
-			window.showInformationMessage('Here\'s your random theme');
-
-			console.log(colorConfig);
-		}
-
-		// let c = new Color(0.2, 0.4, 0.6, 1);
-
-		// // vscode.workspace.getConfiguration('editor').update('background', c, vscode.ConfigurationTarget.Workspace);
-		// // let config = vscode.workspace.getConfiguration('editor').get('background');
-		
-		// //.update('editor.background', '#ABCABC', vscode.ConfigurationTarget.Workspace);//.update('tree.indent', 9, vscode.ConfigurationTarget.Workspace);
-
-		// console.log(config);
-	});
-
-	context.subscriptions.push(disposable);
+// Returns a random color (string) in hex format
+function getRandHexColor() {
+    let color: string = '#';
+    for (var l = colorLength; l > 0; --l) {
+        color += hexDigits[Math.floor(Math.random() * hexDigits.length)];
+    }
+    return color;
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() { }
+export function activate(context: ExtensionContext) {
+    let disposable = commands.registerCommand(
+        'extension.getRandomTheme',
+        () => {
+            // Attempt to get a reference to the user's active editor
+            let activeTextEditor = window.activeTextEditor;
+
+            if (activeTextEditor === undefined) {
+                // TODO: Not sure how to access configuration without an active text editor
+                window.showErrorMessage('Open a file first.');
+            } else {
+                // Map configuration string to random color string
+                let colorConfigMap: { [option: string]: string } = {};
+                configOptions.forEach(
+                    option => (colorConfigMap[option] = getRandHexColor())
+                );
+
+                // Get & update workspace configuration with new colors
+                let workspaceConfig = workspace.getConfiguration(
+                    'workbench',
+                    activeTextEditor.document.uri
+                );
+
+                workspaceConfig.update(
+                    'colorCustomizations',
+                    colorConfigMap,
+                    ConfigurationTarget.Workspace
+                );
+
+                window.showInformationMessage(
+                    "Here's your random theme. Sorry."
+                );
+            }
+        }
+    );
+
+    context.subscriptions.push(disposable);
+}
+
+export function deactivate() {}
