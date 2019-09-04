@@ -22,16 +22,13 @@ export function activate(context: ExtensionContext) {
 		if (activeTextEditor === undefined) {
 			window.showErrorMessage('Open a file first.');
 		} else {
-			let workbenchConfig = workspace.getConfiguration('workbench', activeTextEditor.document.uri);
-			console.log(workbenchConfig);
+			let colorConfig = workspace.getConfiguration('workbench', activeTextEditor.document.uri);
 
-			// Attempt to update individual colors...
-			// workbenchConfig.update('colorCustomizations.colors.editor.background', '#aaaaaa', ConfigurationTarget.Workspace);
-
-			// Update theme instead
-			workbenchConfig.update('colorTheme', 'Solarized Light', ConfigurationTarget.Workspace);
+			colorConfig.update('colorCustomizations', {"editor.background": "#123"}, ConfigurationTarget.Workspace);
 
 			window.showInformationMessage('Here\'s your random theme');
+
+			console.log(colorConfig);
 		}
 
 		// let c = new Color(0.2, 0.4, 0.6, 1);
