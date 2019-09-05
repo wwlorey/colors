@@ -5,6 +5,7 @@
 	"publisher": "wwlorey",
 	"repository": "https://github.com/wwlorey/colors.git",
 	"version": "0.0.1",
+	"icon": "images/icon.png",
 	"engines": {
 		"vscode": "^1.37.0"
 	},
