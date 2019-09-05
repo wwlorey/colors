@@ -90,11 +90,14 @@ const configOptions: string[] = [
     'titleBar.border'
 ];
 
-const hexDigits = '0123456789ABCDEF';
-const colorLength = 6;
+// These digits are randomly chosen from when creating hex numbers
+const hexDigits: string = '0123456789ABCDEF';
 
-// Returns a random color (string) in hex format
-function getRandHexColor() {
+// Hex color string length
+const colorLength: number = 6;
+
+// Returns a random color in hex format
+function getRandHexColor(): string {
     let color: string = '#';
     for (var l = colorLength; l > 0; --l) {
         color += hexDigits[Math.floor(Math.random() * hexDigits.length)];
@@ -110,7 +113,7 @@ export function activate(context: ExtensionContext) {
             let activeTextEditor = window.activeTextEditor;
 
             if (activeTextEditor === undefined) {
-                // TODO: Not sure how to access configuration without an active text editor
+                // Not sure how to access configuration without an active text editor
                 window.showErrorMessage('Open a file first.');
             } else {
                 // Map configuration string to random color string
