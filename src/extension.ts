@@ -126,8 +126,6 @@ export function activate(context: ExtensionContext) {
 
             // Update workspace configuration with new colors
             workspaceConfiguration.update('colorCustomizations', colorConfigMap, ConfigurationTarget.Workspace);
-
-            window.showInformationMessage("Here's your random theme. Sorry.");
         }
     });
 
@@ -138,7 +136,6 @@ export function activate(context: ExtensionContext) {
             // Clear workspace color configuration
             workspaceConfiguration.update('colorCustomizations', {}, ConfigurationTarget.Workspace);
         }
-        
     });
 }
 

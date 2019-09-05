@@ -10,7 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.getRandomTheme"
+		"onCommand:extension.getRandomTheme",
+		"onCommand:extension.removeRandomTheme"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
