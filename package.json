@@ -18,6 +18,10 @@
 			{
 				"command": "extension.getRandomTheme",
 				"title": "Get Random Theme"
+			},
+			{
+				"command": "extension.removeRandomTheme",
+				"title": "Remove Random Theme"
 			}
 		]
 	},

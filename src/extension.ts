@@ -1,10 +1,4 @@
-import {
-    ExtensionContext,
-    commands,
-    window,
-    workspace,
-    ConfigurationTarget
-} from 'vscode';
+import { ExtensionContext, commands, window, workspace, ConfigurationTarget } from 'vscode';
 
 // Configuration options that will be updated with random colors
 const configOptions: string[] = [
@@ -105,43 +99,47 @@ function getRandHexColor(): string {
     return color;
 }
 
+// Returns the user's workspace configuration scoped to 'workbench'
+// Informs the user if unsuccessful
+function getWorkspaceConfiguration(): any {
+    // Attempt to get a reference to the user's active editor
+    let activeTextEditor = window.activeTextEditor;
+
+    if (activeTextEditor === undefined) {
+        // Not sure how to access configuration without an active text editor
+        window.showErrorMessage('Open a file first.');
+        return null;
+    } else {
+        // Configuration can be found
+        return workspace.getConfiguration('workbench', activeTextEditor.document.uri);
+    }
+}
+
 export function activate(context: ExtensionContext) {
-    let disposable = commands.registerCommand(
-        'extension.getRandomTheme',
-        () => {
-            // Attempt to get a reference to the user's active editor
-            let activeTextEditor = window.activeTextEditor;
+    commands.registerCommand('extension.getRandomTheme', () => {
+        let workspaceConfiguration = getWorkspaceConfiguration();
 
-            if (activeTextEditor === undefined) {
-                // Not sure how to access configuration without an active text editor
-                window.showErrorMessage('Open a file first.');
-            } else {
-                // Map configuration string to random color string
-                let colorConfigMap: { [option: string]: string } = {};
-                configOptions.forEach(
-                    option => (colorConfigMap[option] = getRandHexColor())
-                );
+        if (workspaceConfiguration !== null) {
+            // Map configuration string to random color string
+            let colorConfigMap: { [option: string]: string } = {};
+            configOptions.forEach(option => (colorConfigMap[option] = getRandHexColor()));
 
-                // Get & update workspace configuration with new colors
-                let workspaceConfig = workspace.getConfiguration(
-                    'workbench',
-                    activeTextEditor.document.uri
-                );
+            // Update workspace configuration with new colors
+            workspaceConfiguration.update('colorCustomizations', colorConfigMap, ConfigurationTarget.Workspace);
 
-                workspaceConfig.update(
-                    'colorCustomizations',
-                    colorConfigMap,
-                    ConfigurationTarget.Workspace
-                );
-
-                window.showInformationMessage(
-                    "Here's your random theme. Sorry."
-                );
-            }
+            window.showInformationMessage("Here's your random theme. Sorry.");
         }
-    );
+    });
 
-    context.subscriptions.push(disposable);
+    commands.registerCommand('extension.removeRandomTheme', () => {
+        let workspaceConfiguration = getWorkspaceConfiguration();
+
+        if (workspaceConfiguration !== null) {
+            // Clear workspace color configuration
+            workspaceConfiguration.update('colorCustomizations', {}, ConfigurationTarget.Workspace);
+        }
+        
+    });
 }
 
 export function deactivate() {}
