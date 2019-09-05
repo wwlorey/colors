@@ -1,8 +1,8 @@
 # Colors
 
-A random theme generator that will make your eyes hurt.
+A random theme generator for VS Code that will make your eyes hurt.
 
-## *Disclaimer*
+## Disclaimer
 
 *Running this extension will decimate whatever `workbench.colorCustomizations` user settings you
 have saved. Back up these settings before using this extension, if they exist.*
