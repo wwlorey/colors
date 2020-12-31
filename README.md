@@ -21,3 +21,7 @@ randomly generated theme.
 Use the command `Remove Random Theme` to remove all color settings.
 
 ![Remove Random Theme command in action](images/remove-random-theme.gif)
+
+### Party Mode
+
+You didn't ask for it and yet here it is. Run the `Party Mode: On` command for a splendid display of flashing colors.

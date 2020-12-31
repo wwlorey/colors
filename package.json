@@ -14,7 +14,9 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.getRandomTheme",
-		"onCommand:extension.removeRandomTheme"
+		"onCommand:extension.removeRandomTheme",
+		"onCommand:extension.partyModeOn",
+		"onCommand:extension.partyModeOff"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -26,6 +28,14 @@
 			{
 				"command": "extension.removeRandomTheme",
 				"title": "Remove Random Theme"
+			},
+			{
+				"command": "extension.partyModeOn",
+				"title": "Party Mode: On"
+			},
+			{
+				"command": "extension.partyModeOff",
+				"title": "Party Mode: Off"
 			}
 		]
 	},

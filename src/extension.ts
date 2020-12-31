@@ -90,6 +90,8 @@ const hexDigits: string = '0123456789ABCDEF';
 // Hex color string length
 const colorLength: number = 6;
 
+let intervalId: NodeJS.Timeout;
+
 // Returns a random color in hex format
 function getRandHexColor(): string {
     let color: string = '#';
@@ -136,6 +138,15 @@ export function activate(context: ExtensionContext) {
             // Clear workspace color configuration
             workspaceConfiguration.update('colorCustomizations', {}, ConfigurationTarget.Workspace);
         }
+    });
+
+    commands.registerCommand('extension.partyModeOn', () => {
+        intervalId = setInterval(() => commands.executeCommand('extension.getRandomTheme'), 500);
+    });
+
+    commands.registerCommand('extension.partyModeOff', () => {
+        clearInterval(intervalId);
+        commands.executeCommand('extension.removeRandomTheme');
     });
 }
 
