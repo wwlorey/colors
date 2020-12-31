@@ -3,7 +3,10 @@
 	"displayName": "Colors",
 	"description": "A random theme generator that will make your eyes hurt.",
 	"publisher": "wwlorey",
-	"repository": "https://github.com/wwlorey/colors.git",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wwlorey/colors.git"
+	},
 	"version": "0.0.2",
 	"icon": "images/icon.png",
 	"engines": {

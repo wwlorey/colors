@@ -1,94 +1,5 @@
 import { ExtensionContext, commands, window, workspace, ConfigurationTarget } from 'vscode';
-
-// Configuration options that will be updated with random colors
-const configOptions: string[] = [
-    'activityBar.background',
-    'activityBar.foreground',
-    'button.background',
-    'button.foreground',
-    'editor.background',
-    'editor.findMatchBackground',
-    'editor.findMatchBorder',
-    'editor.findMatchHighlightBackground',
-    'editor.findMatchHighlightBorder',
-    'editor.findRangeHighlightBackground',
-    'editor.findRangeHighlightBorder',
-    'editor.foreground',
-    'editor.hoverHighlightBackground',
-    'editor.inactiveSelectionBackground',
-    'editor.lineHighlightBackground',
-    'editor.lineHighlightBorder',
-    'editor.rangeHighlightBackground',
-    'editor.rangeHighlightBorder',
-    'editor.selectionBackground',
-    'editor.selectionForeground',
-    'editor.selectionHighlightBackground',
-    'editor.selectionHighlightBorder',
-    'editor.wordHighlightBackground',
-    'editor.wordHighlightBorder',
-    'editor.wordHighlightStrongBackground',
-    'editor.wordHighlightStrongBorder',
-    'editorCursor.background',
-    'editorCursor.foreground',
-    'editorGroupHeader.tabsBackground',
-    'editorLineNumber.activeForeground',
-    'editorLineNumber.foreground',
-    'editorPane.background',
-    'list.activeSelectionBackground',
-    'list.activeSelectionForeground',
-    'list.dropBackground',
-    'list.focusBackground',
-    'list.focusForeground',
-    'list.highlightForeground',
-    'list.hoverBackground',
-    'list.hoverForeground',
-    'list.inactiveSelectionBackground',
-    'list.inactiveSelectionForeground',
-    'menu.background',
-    'menu.foreground',
-    'menubar.selectionBackground',
-    'menubar.selectionBorder',
-    'menubar.selectionForeground',
-    'notificationCenter.border',
-    'notificationCenterHeader.background',
-    'notificationCenterHeader.foreground',
-    'notifications.background',
-    'notifications.border',
-    'notifications.foreground',
-    'panel.background',
-    'panel.border',
-    'sideBar.background',
-    'sideBar.border',
-    'sideBar.foreground',
-    'sideBarSectionHeader.background',
-    'sideBarTitle.foreground',
-    'statusBar.background',
-    'statusBar.border',
-    'statusBar.foreground',
-    'tab.activeBackground',
-    'tab.activeForeground',
-    'tab.hoverBackground',
-    'tab.inactiveBackground',
-    'tab.unfocusedActiveBackground',
-    'terminal.background',
-    'terminal.foreground',
-    'textBlockQuote.background',
-    'textBlockQuote.border',
-    'textCodeBlock.background',
-    'textLink.activeForeground',
-    'textLink.foreground',
-    'textPreformat.foreground',
-    'textSeparator.foreground',
-    'titleBar.activeBackground',
-    'titleBar.activeForeground',
-    'titleBar.border'
-];
-
-// These digits are randomly chosen from when creating hex numbers
-const hexDigits: string = '0123456789ABCDEF';
-
-// Hex color string length
-const colorLength: number = 6;
+import { hexDigits, configOptions, colorLength } from './constants';
 
 let intervalId: NodeJS.Timeout;
 
@@ -132,8 +43,9 @@ export function activate(context: ExtensionContext) {
     });
 
     commands.registerCommand('extension.removeRandomTheme', () => {
-        let workspaceConfiguration = getWorkspaceConfiguration();
+        clearInterval(intervalId);
 
+        let workspaceConfiguration = getWorkspaceConfiguration();
         if (workspaceConfiguration !== null) {
             // Clear workspace color configuration
             workspaceConfiguration.update('colorCustomizations', {}, ConfigurationTarget.Workspace);
@@ -145,7 +57,6 @@ export function activate(context: ExtensionContext) {
     });
 
     commands.registerCommand('extension.partyModeOff', () => {
-        clearInterval(intervalId);
         commands.executeCommand('extension.removeRandomTheme');
     });
 }
