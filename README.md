@@ -24,4 +24,7 @@ Use the command `Remove Random Theme` to remove all color settings.
 
 ### Party Mode
 
-You didn't ask for it and yet here it is. Run the `Party Mode: On` command for a splendid display of flashing colors.
+You didn't ask for it and yet here it is. Run the `Colors: Toggle Party Mode` command for a splendid display of flashing colors.
+
+
+And when you've had enough, run the `Colors: Toggle Party Mode` command again to stop the party.

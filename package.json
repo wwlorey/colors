@@ -18,8 +18,7 @@
 	"activationEvents": [
 		"onCommand:extension.getRandomTheme",
 		"onCommand:extension.removeRandomTheme",
-		"onCommand:extension.partyModeOn",
-		"onCommand:extension.partyModeOff"
+		"onCommand:extension.togglePartyMode"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -35,13 +34,8 @@
 				"category": "Colors"
 			},
 			{
-				"command": "extension.partyModeOn",
-				"title": "Party Mode: On",
-				"category": "Colors"
-			},
-			{
-				"command": "extension.partyModeOff",
-				"title": "Party Mode: Off",
+				"command": "extension.togglePartyMode",
+				"title": "Toggle Party Mode",
 				"category": "Colors"
 			}
 		]

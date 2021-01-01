@@ -23,7 +23,7 @@ export function activate(context: ExtensionContext) {
     });
 
     commands.registerCommand('extension.removeRandomTheme', () => {
-        if (intervalId !== undefined) {
+        if (!!intervalId) {
             clearInterval(intervalId);
             intervalId = undefined;
         }
@@ -32,16 +32,14 @@ export function activate(context: ExtensionContext) {
         workspace.getConfiguration('workbench').update('colorCustomizations', {}, ConfigurationTarget.Workspace);
     });
 
-    commands.registerCommand('extension.partyModeOn', () => {
-        if (intervalId === undefined) {
-            // Only set the interval if it's not set already
-            // Otherwise unstoppable party mode is a reality 😬
+    commands.registerCommand('extension.togglePartyMode', () => {
+        if (!!intervalId) {
+            // End party mode
+            commands.executeCommand('extension.removeRandomTheme');
+        } else {
+            // Begin party mode
             intervalId = setInterval(() => commands.executeCommand('extension.getRandomTheme'), 500);
         }
-    });
-
-    commands.registerCommand('extension.partyModeOff', () => {
-        commands.executeCommand('extension.removeRandomTheme');
     });
 }
 
