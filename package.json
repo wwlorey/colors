@@ -26,19 +26,23 @@
 		"commands": [
 			{
 				"command": "extension.getRandomTheme",
-				"title": "Get Random Theme"
+				"title": "Get Random Theme",
+				"category": "Colors"
 			},
 			{
 				"command": "extension.removeRandomTheme",
-				"title": "Remove Random Theme"
+				"title": "Remove Random Theme",
+				"category": "Colors"
 			},
 			{
 				"command": "extension.partyModeOn",
-				"title": "Party Mode: On"
+				"title": "Party Mode: On",
+				"category": "Colors"
 			},
 			{
 				"command": "extension.partyModeOff",
-				"title": "Party Mode: Off"
+				"title": "Party Mode: Off",
+				"category": "Colors"
 			}
 		]
 	},
