@@ -12,6 +12,8 @@ function getRandHexColor(): string {
     return color;
 }
 
+const SavedColorConfigMap = workspace.getConfiguration('workbench').get('colorCustomizations') || {}
+
 export function activate(context: ExtensionContext) {
     commands.registerCommand('extension.getRandomTheme', () => {
         // Map configuration string to random color string
@@ -29,7 +31,7 @@ export function activate(context: ExtensionContext) {
         }
 
         // Clear workspace color configuration
-        workspace.getConfiguration('workbench').update('colorCustomizations', {}, ConfigurationTarget.Workspace);
+        workspace.getConfiguration('workbench').update('colorCustomizations', SavedColorConfigMap, ConfigurationTarget.Workspace);
     });
 
     commands.registerCommand('extension.togglePartyMode', () => {
@@ -43,4 +45,4 @@ export function activate(context: ExtensionContext) {
     });
 }
 
-export function deactivate() {}
+export function deactivate() { }
