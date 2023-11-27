@@ -3,11 +3,12 @@
 	"displayName": "Colors",
 	"description": "A random theme generator that will make your eyes hurt.",
 	"publisher": "wwlorey",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/wwlorey/colors.git"
 	},
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"icon": "images/icon.png",
 	"engines": {
 		"vscode": "^1.37.0"
