@@ -2,11 +2,7 @@
 
 A random theme generator for VS Code that will make your eyes hurt.
 
-## Disclaimers
-🛑 Warning: Rapidly flashing colors! 🛑
-
-Running this extension will decimate whatever `workbench.colorCustomizations` user settings you
-have saved. Back up these settings before using this extension, if they exist.
+## 🛑 Warning: Rapidly flashing colors! 🛑
 
 ## Features
 
@@ -14,6 +10,8 @@ have saved. Back up these settings before using this extension, if they exist.
 
 Enter the command `Colors: Get Random Theme` in the command palette to generate and apply a
 randomly generated theme.
+
+> Make sure you have a workspace open! The theme is changed automatically via workspace settings.
 
 ![Get Random Theme command in action](images/get-random-theme.gif)
 
