@@ -1,4 +1,8 @@
-# Colors
+# Colors (Archived)
+
+## *The meme has run its course. This project is no longer maintained.*
+
+---
 
 A random theme generator for VS Code that will make your eyes hurt.
 
